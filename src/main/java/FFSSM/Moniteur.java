@@ -4,12 +4,15 @@
 package FFSSM;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 public class Moniteur extends Plongeur {
 
     public int numeroDiplome;
+    public ArrayList<Embauche> lesEmbauches = new ArrayList<>();
 
     public Moniteur(String numeroINSEE, String nom, String prenom, String adresse, String telephone, LocalDate naissance, int numeroDiplome) {
         super(numeroINSEE, nom, prenom, adresse, telephone, naissance);
@@ -23,7 +26,14 @@ public class Moniteur extends Plongeur {
      */
     public Optional<Club> employeurActuel() {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+         // return le club de l'embauche si il y a
+         Optional<Club> employeur = Optional.empty();
+         if (!lesEmbauches.isEmpty()) {
+             if (!lesEmbauches.get(lesEmbauches.size()-1).estTerminee()) {
+             employeur = Optional.of(lesEmbauches.get(lesEmbauches.size()-1).getEmployeur());
+             }
+        }
+         return employeur;
     }
     
     /**
@@ -33,12 +43,14 @@ public class Moniteur extends Plongeur {
      */
     public void nouvelleEmbauche(Club employeur, LocalDate debutNouvelle) {   
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");	    
+         // créer la classe Embauche
+         Embauche e = new Embauche(debutNouvelle, this, employeur);
+         lesEmbauches.add(e);
     }
 
     public List<Embauche> emplois() {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+         return lesEmbauches;
     }
 
 }

@@ -46,7 +46,12 @@ public class Licence {
      **/
     public boolean estValide(LocalDate d) {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        boolean isValide = false;
+        //if (d.getYear() <= delivrance.getYear()+1) {
+        if (d.isBefore(delivrance.plusYears(1))) {
+            isValide = true;
+        }
+        return isValide;
     }
 
 }

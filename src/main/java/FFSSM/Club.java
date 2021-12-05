@@ -3,19 +3,20 @@
  */
 package FFSSM;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Club {
 
  
     public Moniteur president;
-
     public String nom;
-
     public String adresse;
-
     public String telephone;
+    
+    public ArrayList<Plongee> lesPlongees = new ArrayList<> ();
 
     public Club(Moniteur président, String nom, String telephone) {
         this.president = président;
@@ -31,7 +32,14 @@ public class Club {
      */
     public Set<Plongee> plongeesNonConformes() {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        HashSet <Plongee> plogeesNonConformes = new HashSet<>();
+         
+        for (Plongee p : lesPlongees) {
+            if (!p.estConforme()) {
+                plogeesNonConformes.add(p);
+            }
+        }
+        return plogeesNonConformes;
     }
 
     /**
@@ -40,7 +48,7 @@ public class Club {
      */
     public void organisePlongee(Plongee p) {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+         lesPlongees.add(p);
     }
     
     
@@ -79,6 +87,43 @@ public class Club {
     @Override
     public String toString() {
         return "Club{" + "président=" + president + ", nom=" + nom + ", adresse=" + adresse + ", telephone=" + telephone + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.president);
+        hash = 17 * hash + Objects.hashCode(this.nom);
+        hash = 17 * hash + Objects.hashCode(this.adresse);
+        hash = 17 * hash + Objects.hashCode(this.telephone);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Club other = (Club) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.adresse, other.adresse)) {
+            return false;
+        }
+        if (!Objects.equals(this.telephone, other.telephone)) {
+            return false;
+        }
+        if (!Objects.equals(this.president, other.president)) {
+            return false;
+        }
+        return true;
     }
 
 }
